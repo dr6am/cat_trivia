@@ -1,7 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: no_leading_underscores_for_local_identifiers
-
 part of 'network_data_source.dart';
 
 // **************************************************************************
@@ -21,17 +19,17 @@ class _CatFactsApiDataSource implements CatFactsApiDataSource {
 
   @override
   Future<CatFact> getRandomFact() async {
-    const Map<String, dynamic> _extra = <String, dynamic>{};
-    final Map<String, dynamic> queryParameters = <String, dynamic>{};
-    final Map<String, dynamic> _headers = <String, dynamic>{};
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result =
-        await _dio.fetch<Map<String, dynamic>>(_setStreamType<CatFact>(
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<CatFact>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/facts/random?animal_type=cat',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final CatFact value = CatFact.fromJson(_result.data!);
+    final value = CatFact.fromJson(_result.data!);
     return value;
   }
 

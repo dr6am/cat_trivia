@@ -34,6 +34,7 @@ class HomePage extends StatelessWidget {
   Widget _buildHistoryButton(BuildContext context) {
     return ElevatedButton(
         style: ButtonStyle(
+          splashFactory: NoSplash.splashFactory,
           fixedSize: MaterialStateProperty.all<Size>(const Size.square(35)),
           backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(

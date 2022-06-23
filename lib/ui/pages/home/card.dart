@@ -77,11 +77,11 @@ class CustomFactCard extends StatelessWidget {
             BoxConstraints(maxHeight: MediaQuery.of(context).size.height * .6),
         width: MediaQuery.of(context).size.width * .9,
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: state.hasError ? CustomColor.red : Colors.white,
             border: Border.all(width: 2),
             borderRadius: BorderRadius.circular(8),
             boxShadow: const <BoxShadow>[
-              BoxShadow(offset: Offset(0, 6)),
+              BoxShadow(offset: Offset(0, 4)),
             ]),
         child: Stack(children: <Widget>[
           Positioned.fill(
@@ -98,6 +98,12 @@ class CustomFactCard extends StatelessWidget {
                       child: Image.network(
                         '${CustomStrings.IMAGE_URL}?fjisdjfijisf=${state.currentFact?.id ?? ''}',
                         fit: BoxFit.cover,
+                        errorBuilder: (BuildContext context, Object error, _) {
+                          return Image.asset(
+                            Asset.errorCat,
+                            fit: BoxFit.cover,
+                          );
+                        },
                       ),
                     )),
                 Expanded(
@@ -105,13 +111,25 @@ class CustomFactCard extends StatelessWidget {
                   padding: const EdgeInsets.all(12.0),
                   child: Center(
                     child: Text(
-                      state.currentFact?.text ?? '',
+                      state.currentFact?.text ??
+                          'Something went wrong :(\n Please check your internet connection and try again',
                       maxLines: 6,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ),
                 )),
+                SizedBox(
+                  height: 20,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 8.0, bottom: 4.0),
+                    child: Text(
+                      state.currentFact?.created ?? '',
+                      textAlign: TextAlign.right,
+                      style: Theme.of(context).textTheme.caption,
+                    ),
+                  ),
+                )
               ],
             ),
           ),
@@ -153,7 +171,10 @@ class LoadingFactCard extends StatelessWidget {
                             fit: BoxFit.fitWidth,
                           ),
                         ),
-                        const Center(
+                        const Positioned(
+                          top: 100,
+                          left: 0,
+                          right: 0,
                           child: CupertinoActivityIndicator(
                             radius: 16,
                             color: Colors.white,

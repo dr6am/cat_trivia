@@ -12,5 +12,5 @@ abstract class CatFactsApiDataSource {
       _CatFactsApiDataSource;
 
   @GET('/facts/random?animal_type=cat')
-  Future<CatFact> getRandomFact();
+  Future<CatFact?> getRandomFact();
 }

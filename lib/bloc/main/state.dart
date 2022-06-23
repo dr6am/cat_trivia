@@ -1,7 +1,7 @@
 part of 'bloc.dart';
 
 @freezed
-abstract class MainBlocState with _$MainBlocState {
+class MainBlocState with _$MainBlocState {
   factory MainBlocState({
     @Default(true) bool loading,
     @Default(false) bool hasError,

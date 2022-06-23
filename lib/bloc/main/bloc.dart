@@ -21,14 +21,16 @@ class MainBloc extends Bloc<MainBlocEvent, MainBlocState> {
   Future<void> loadRandomFact(
       MainBlocEvent event, Emitter<MainBlocState> emit) async {
     emit(state.copyWith(loading: true, isImageLoaded: false));
-    await Future<void>.delayed(const Duration(seconds: 2));
-    final CatFact result =
-        await _catFactsRepository.loadRandom().catchError((e) {
-      emit(state.copyWith(hasError: true, loading: false));
-    });
+    final CatFact? result =
+        await _catFactsRepository.loadRandom().catchError((e) => null);
+    if (result == null) {
+      emit(state.copyWith(hasError: true, loading: false, currentFact: null));
+    }
     if (kDebugMode) {
       print(result);
     }
-    emit(state.copyWith(currentFact: result, loading: false));
+    if (result != null)
+      emit(
+          state.copyWith(currentFact: result, hasError: false, loading: false));
   }
 }

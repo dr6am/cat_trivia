@@ -25,7 +25,7 @@ class CatFactsRepositoryImpl extends CatFactsRepository {
   }
 
   @override
-  Future<CatFact> loadRandom() async {
+  Future<CatFact?> loadRandom() async {
     return _networkDataSource.getRandomFact();
   }
 }

@@ -23,7 +23,8 @@ mixin _$CatFact {
   @JsonKey(name: '_id')
   String get id => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
-  String get createdAt => throw _privateConstructorUsedError;
+  @DateTimeStringConv()
+  DateTime? get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +35,10 @@ mixin _$CatFact {
 abstract class $CatFactCopyWith<$Res> {
   factory $CatFactCopyWith(CatFact value, $Res Function(CatFact) then) =
       _$CatFactCopyWithImpl<$Res>;
-  $Res call({@JsonKey(name: '_id') String id, String text, String createdAt});
+  $Res call(
+      {@JsonKey(name: '_id') String id,
+      String text,
+      @DateTimeStringConv() DateTime? createdAt});
 }
 
 /// @nodoc
@@ -63,7 +67,7 @@ class _$CatFactCopyWithImpl<$Res> implements $CatFactCopyWith<$Res> {
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as DateTime?,
     ));
   }
 }
@@ -74,7 +78,10 @@ abstract class _$$_CatFactCopyWith<$Res> implements $CatFactCopyWith<$Res> {
           _$_CatFact value, $Res Function(_$_CatFact) then) =
       __$$_CatFactCopyWithImpl<$Res>;
   @override
-  $Res call({@JsonKey(name: '_id') String id, String text, String createdAt});
+  $Res call(
+      {@JsonKey(name: '_id') String id,
+      String text,
+      @DateTimeStringConv() DateTime? createdAt});
 }
 
 /// @nodoc
@@ -104,18 +111,19 @@ class __$$_CatFactCopyWithImpl<$Res> extends _$CatFactCopyWithImpl<$Res>
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as DateTime?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_CatFact implements _CatFact {
+class _$_CatFact extends _CatFact {
   const _$_CatFact(
       {@JsonKey(name: '_id') this.id = CustomStrings.EMPTY,
       this.text = CustomStrings.EMPTY,
-      this.createdAt = CustomStrings.EMPTY});
+      @DateTimeStringConv() this.createdAt})
+      : super._();
 
   factory _$_CatFact.fromJson(Map<String, dynamic> json) =>
       _$$_CatFactFromJson(json);
@@ -127,8 +135,8 @@ class _$_CatFact implements _CatFact {
   @JsonKey()
   final String text;
   @override
-  @JsonKey()
-  final String createdAt;
+  @DateTimeStringConv()
+  final DateTime? createdAt;
 
   @override
   String toString() {
@@ -164,11 +172,12 @@ class _$_CatFact implements _CatFact {
   }
 }
 
-abstract class _CatFact implements CatFact {
+abstract class _CatFact extends CatFact {
   const factory _CatFact(
       {@JsonKey(name: '_id') final String id,
       final String text,
-      final String createdAt}) = _$_CatFact;
+      @DateTimeStringConv() final DateTime? createdAt}) = _$_CatFact;
+  const _CatFact._() : super._();
 
   factory _CatFact.fromJson(Map<String, dynamic> json) = _$_CatFact.fromJson;
 
@@ -178,7 +187,8 @@ abstract class _CatFact implements CatFact {
   @override
   String get text => throw _privateConstructorUsedError;
   @override
-  String get createdAt => throw _privateConstructorUsedError;
+  @DateTimeStringConv()
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_CatFactCopyWith<_$_CatFact> get copyWith =>

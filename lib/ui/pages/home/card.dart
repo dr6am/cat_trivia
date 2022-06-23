@@ -32,35 +32,30 @@ class _CatFactCardState extends State<CatFactCard>
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<MainBloc, MainBlocState>(
+    return BlocListener<MainBloc, MainBlocState>(
         listenWhen: (MainBlocState previous, MainBlocState current) =>
             previous.loading != current.loading,
-        listener: (BuildContext context, MainBlocState state) {
-          if (_cardScaleController.isAnimating) {
-            _cardScaleController.stop();
-          }
-          if (state.loading)
-            _cardScaleController.animateBack(0.7,
-                duration: defaultAnimationDuration);
-          else
-            _cardScaleController.animateTo(1.0,
-                duration: defaultAnimationDuration);
-        },
-        buildWhen: (MainBlocState previous, MainBlocState current) =>
-            previous.loading != current.loading ||
-            previous.currentFact != current.currentFact,
-        builder: (BuildContext context, MainBlocState state) {
-          return ScaleTransition(
-            scale: _cardScaleAnimation,
-            child: const CustomFactCard(),
-          );
-        });
+        listener: (_, MainBlocState state) => _animateCard(state.loading),
+        child: ScaleTransition(
+          scale: _cardScaleAnimation,
+          child: const CustomFactCard(),
+        ));
   }
 
   @override
   void dispose() {
     _cardScaleController.dispose();
     super.dispose();
+  }
+
+  void _animateCard(bool state) {
+    if (_cardScaleController.isAnimating) {
+      _cardScaleController.stop();
+    }
+    if (state)
+      _cardScaleController.animateBack(0.7, duration: defaultAnimationDuration);
+    else
+      _cardScaleController.animateTo(1.0, duration: defaultAnimationDuration);
   }
 }
 
@@ -69,21 +64,23 @@ class CustomFactCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MainBloc, MainBlocState>(
-      buildWhen: (MainBlocState prev, MainBlocState curr) =>
-          prev.loading != curr.loading && prev.currentFact != curr.currentFact,
-      builder: (BuildContext context, MainBlocState state) => Container(
-        constraints:
-            BoxConstraints(maxHeight: MediaQuery.of(context).size.height * .6),
-        width: MediaQuery.of(context).size.width * .9,
-        decoration: BoxDecoration(
-            color: state.hasError ? CustomColor.red : Colors.white,
-            border: Border.all(width: 2),
-            borderRadius: BorderRadius.circular(8),
-            boxShadow: const <BoxShadow>[
-              BoxShadow(offset: Offset(0, 4)),
-            ]),
-        child: Stack(children: <Widget>[
+    return Container(
+      constraints:
+          BoxConstraints(maxHeight: MediaQuery.of(context).size.height * .6),
+      width: MediaQuery.of(context).size.width * .9,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(width: 2),
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: const <BoxShadow>[
+            BoxShadow(offset: Offset(0, 4)),
+          ]),
+      child: BlocBuilder<MainBloc, MainBlocState>(
+        buildWhen: (MainBlocState prev, MainBlocState curr) =>
+            prev.loading != curr.loading &&
+            prev.currentFact != curr.currentFact,
+        builder: (BuildContext context, MainBlocState state) =>
+            Stack(children: <Widget>[
           Positioned.fill(
             child: Column(
               mainAxisSize: MainAxisSize.min,

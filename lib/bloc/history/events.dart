@@ -1,4 +1,5 @@
 part of 'bloc.dart';
 
-@immutable
 abstract class HistoryBlocEvent {}
+
+class LoadHistoryEvent extends HistoryBlocEvent {}

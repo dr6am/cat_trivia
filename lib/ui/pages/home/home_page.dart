@@ -6,6 +6,7 @@ import '../../../bloc/main/bloc.dart';
 import '../../../const/asset_path.dart';
 import '../../../const/colors.dart';
 import '../../../const/strings.dart';
+import '../history/history_page.dart';
 
 part 'card.dart';
 
@@ -44,6 +45,10 @@ class HomePage extends StatelessWidget {
         ),
         onPressed: () {
           // TODO(alex): Open history page
+          Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                  fullscreenDialog: true, builder: (_) => const HistoryPage()));
         },
         child: const Icon(
           Icons.book_outlined,

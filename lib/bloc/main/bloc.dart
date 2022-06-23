@@ -22,7 +22,7 @@ class MainBloc extends Bloc<MainBlocEvent, MainBlocState> {
       MainBlocEvent event, Emitter<MainBlocState> emit) async {
     emit(state.copyWith(loading: true, isImageLoaded: false));
     final CatFact? result =
-        await _catFactsRepository.loadRandom().catchError((e) => null);
+        await _catFactsRepository.loadRandom().catchError((_) => null);
     if (result == null) {
       emit(state.copyWith(hasError: true, loading: false, currentFact: null));
     }

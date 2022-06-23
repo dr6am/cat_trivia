@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../bloc/history/bloc.dart';
 import '../../../const/colors.dart';
 import '../../../models/cat_fact.dart';
 
@@ -9,45 +11,74 @@ class HistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: CustomColor.darkBlue,
+      extendBodyBehindAppBar: true,
+      extendBody: true,
+      backgroundColor: CustomColor.lightBlue,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.transparent,
+        backgroundColor: CustomColor.lightBlue.withAlpha(250),
         foregroundColor: Colors.transparent,
         leading: IconButton(
             icon: const Icon(
               Icons.close,
-              color: Colors.black87,
+              color: Colors.black,
             ),
             onPressed: () => Navigator.pop(context)),
         centerTitle: true,
         title: Text(
           'History',
-          style: Theme.of(context).textTheme.titleLarge,
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge
+              ?.apply(color: Colors.black, fontWeightDelta: 4),
         ),
       ),
       body: SafeArea(
+        top: false,
         bottom: false,
-        child: RefreshIndicator(
-          onRefresh: () async {
-            await Future<void>.delayed(const Duration(milliseconds: 300));
-            return;
-          },
-          child: ListView.builder(
-            itemBuilder: (BuildContext context, int index) => _buildTile(
-                // key: ObjectKey<int>(index),
-                context: context,
-                catFact: CatFact(
-                    id: (++index).toString(),
-                    text: 'Cat fact #$index',
-                    createdAt: DateTime.now())),
-          ),
-        ),
+        child: BlocBuilder<HistoryBloc, HistoryState>(
+            buildWhen: (HistoryState prev, HistoryState curr) =>
+                prev.loading != curr.loading || prev.history != curr.history,
+            builder: (BuildContext context, HistoryState state) {
+              if (state.loading)
+                return const Center(
+                  child: SizedBox.square(
+                    dimension: 20,
+                    child: CircularProgressIndicator.adaptive(),
+                  ),
+                );
+              else if (state.history.isNotEmpty)
+                return buildList(context);
+              else {
+                return const Center(
+                  child: Text('History is empty :('),
+                );
+              }
+            }),
       ),
     );
   }
 
-  Widget _buildTile({required BuildContext context, required CatFact catFact}) {
+  Widget buildList(BuildContext context) {
+    return BlocBuilder<HistoryBloc, HistoryState>(
+        builder: (BuildContext context, HistoryState state) {
+      return ListView.builder(
+        itemCount: state.history.length,
+        itemBuilder: (BuildContext context, int index) => CatFactHistoryTile(
+            key: ValueKey<int>(index),
+            catFact: state.history[index].copyWith(id: (++index).toString())),
+      );
+    });
+  }
+}
+
+class CatFactHistoryTile extends StatelessWidget {
+  const CatFactHistoryTile({Key? key, required this.catFact}) : super(key: key);
+
+  final CatFact catFact;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       key: ValueKey<String>(catFact.id),
       margin: const EdgeInsets.symmetric(horizontal: 36, vertical: 12),
@@ -64,18 +95,19 @@ class HistoryPage extends StatelessWidget {
         children: <Widget>[
           Text(
             'Cat fact №${catFact.id}',
-            textAlign: TextAlign.left,
+            textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
                 .bodyLarge!
-                .apply(fontWeightDelta: 2),
+                .apply(fontWeightDelta: 2, fontSizeDelta: 4),
           ),
+          const SizedBox(height: 8),
           Text(
-            catFact.text * 24,
+            catFact.text,
             textAlign: TextAlign.left,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 8),
           Text(
             catFact.created,
             textAlign: TextAlign.right,

@@ -32,7 +32,8 @@ class InjectionContainer extends StatelessWidget {
                 create: (BuildContext context) =>
                     MainBloc(context.read<CatFactsRepository>())),
             BlocProvider<HistoryBloc>(
-                create: (BuildContext _) => HistoryBloc()),
+                create: (BuildContext context) =>
+                    HistoryBloc(context.read<CatFactsRepository>())),
           ],
           child: child,
         ));

@@ -1,3 +1,5 @@
+import 'package:hive/hive.dart';
+
 import '../../../models/cat_fact.dart';
 import '../../data_sources/network/network_data_source.dart';
 import '../../data_sources/storage/storage_data_source.dart';
@@ -14,18 +16,18 @@ class CatFactsRepositoryImpl extends CatFactsRepository {
   final CatFactsApiDataSource _networkDataSource;
 
   @override
-  Future<List<CatFact>> loadHistory() async {
-    return Future<List<CatFact>>.value(<CatFact>[]);
-  }
-
-  @override
-  Future<CatFact?> loadItemById(String id) async {
-    _storageDataSource.loadItemById(id);
-    return null;
-  }
-
-  @override
   Future<CatFact?> loadRandom() async {
     return _networkDataSource.getRandomFact();
   }
+
+  @override
+  void storeFact(CatFact catFact) => _storageDataSource.storeItem(catFact);
+
+  @override
+  List<CatFact> loadHistory() {
+    return _storageDataSource.loadHistory();
+  }
+
+  @override
+  Stream<BoxEvent> dbUpdatesStream() => _storageDataSource.stream();
 }

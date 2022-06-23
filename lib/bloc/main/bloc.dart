@@ -13,7 +13,6 @@ part 'state.dart';
 class MainBloc extends Bloc<MainBlocEvent, MainBlocState> {
   MainBloc(this._catFactsRepository) : super(MainBlocState()) {
     on<LoadRandomFactEvent>(loadRandomFact, transformer: droppable());
-
     add(LoadRandomFactEvent());
   }
   final CatFactsRepository _catFactsRepository;
@@ -21,16 +20,21 @@ class MainBloc extends Bloc<MainBlocEvent, MainBlocState> {
   Future<void> loadRandomFact(
       MainBlocEvent event, Emitter<MainBlocState> emit) async {
     emit(state.copyWith(loading: true, isImageLoaded: false));
+    if (kDebugMode) {
+      await Future<void>.delayed(const Duration(milliseconds: 100));
+    }
     final CatFact? result =
         await _catFactsRepository.loadRandom().catchError((_) => null);
     if (result == null) {
       emit(state.copyWith(hasError: true, loading: false, currentFact: null));
     }
-    if (kDebugMode) {
-      print(result);
-    }
-    if (result != null)
+
+    if (result != null) {
+      if (result.sentCount > 0) {
+        _catFactsRepository.storeFact(result);
+      }
       emit(
           state.copyWith(currentFact: result, hasError: false, loading: false));
+    }
   }
 }

@@ -20,10 +20,17 @@ CatFact _$CatFactFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CatFact {
+  @JsonKey(name: 'status')
+  @SentCountConverter()
+  @HiveField(0)
+  int get sentCount => throw _privateConstructorUsedError;
   @JsonKey(name: '_id')
+  @HiveField(1)
   String get id => throw _privateConstructorUsedError;
+  @HiveField(2)
   String get text => throw _privateConstructorUsedError;
   @DateTimeStringConv()
+  @HiveField(3)
   DateTime? get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,9 +43,18 @@ abstract class $CatFactCopyWith<$Res> {
   factory $CatFactCopyWith(CatFact value, $Res Function(CatFact) then) =
       _$CatFactCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(name: '_id') String id,
-      String text,
-      @DateTimeStringConv() DateTime? createdAt});
+      {@JsonKey(name: 'status')
+      @SentCountConverter()
+      @HiveField(0)
+          int sentCount,
+      @JsonKey(name: '_id')
+      @HiveField(1)
+          String id,
+      @HiveField(2)
+          String text,
+      @DateTimeStringConv()
+      @HiveField(3)
+          DateTime? createdAt});
 }
 
 /// @nodoc
@@ -51,11 +67,16 @@ class _$CatFactCopyWithImpl<$Res> implements $CatFactCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? sentCount = freezed,
     Object? id = freezed,
     Object? text = freezed,
     Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
+      sentCount: sentCount == freezed
+          ? _value.sentCount
+          : sentCount // ignore: cast_nullable_to_non_nullable
+              as int,
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -79,9 +100,18 @@ abstract class _$$_CatFactCopyWith<$Res> implements $CatFactCopyWith<$Res> {
       __$$_CatFactCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(name: '_id') String id,
-      String text,
-      @DateTimeStringConv() DateTime? createdAt});
+      {@JsonKey(name: 'status')
+      @SentCountConverter()
+      @HiveField(0)
+          int sentCount,
+      @JsonKey(name: '_id')
+      @HiveField(1)
+          String id,
+      @HiveField(2)
+          String text,
+      @DateTimeStringConv()
+      @HiveField(3)
+          DateTime? createdAt});
 }
 
 /// @nodoc
@@ -95,11 +125,16 @@ class __$$_CatFactCopyWithImpl<$Res> extends _$CatFactCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? sentCount = freezed,
     Object? id = freezed,
     Object? text = freezed,
     Object? createdAt = freezed,
   }) {
     return _then(_$_CatFact(
+      sentCount: sentCount == freezed
+          ? _value.sentCount
+          : sentCount // ignore: cast_nullable_to_non_nullable
+              as int,
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -118,29 +153,47 @@ class __$$_CatFactCopyWithImpl<$Res> extends _$CatFactCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
+@HiveType(typeId: 0, adapterName: 'CatFactAdapter')
 class _$_CatFact extends _CatFact {
   const _$_CatFact(
-      {@JsonKey(name: '_id') this.id = CustomStrings.EMPTY,
-      this.text = CustomStrings.EMPTY,
-      @DateTimeStringConv() this.createdAt})
+      {@JsonKey(name: 'status')
+      @SentCountConverter()
+      @HiveField(0)
+          this.sentCount = 0,
+      @JsonKey(name: '_id')
+      @HiveField(1)
+          this.id = CustomStrings.EMPTY,
+      @HiveField(2)
+          this.text = CustomStrings.EMPTY,
+      @DateTimeStringConv()
+      @HiveField(3)
+          this.createdAt})
       : super._();
 
   factory _$_CatFact.fromJson(Map<String, dynamic> json) =>
       _$$_CatFactFromJson(json);
 
   @override
+  @JsonKey(name: 'status')
+  @SentCountConverter()
+  @HiveField(0)
+  final int sentCount;
+  @override
   @JsonKey(name: '_id')
+  @HiveField(1)
   final String id;
   @override
   @JsonKey()
+  @HiveField(2)
   final String text;
   @override
   @DateTimeStringConv()
+  @HiveField(3)
   final DateTime? createdAt;
 
   @override
   String toString() {
-    return 'CatFact(id: $id, text: $text, createdAt: $createdAt)';
+    return 'CatFact(sentCount: $sentCount, id: $id, text: $text, createdAt: $createdAt)';
   }
 
   @override
@@ -148,6 +201,7 @@ class _$_CatFact extends _CatFact {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CatFact &&
+            const DeepCollectionEquality().equals(other.sentCount, sentCount) &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.text, text) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt));
@@ -157,6 +211,7 @@ class _$_CatFact extends _CatFact {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(sentCount),
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(text),
       const DeepCollectionEquality().hash(createdAt));
@@ -174,20 +229,37 @@ class _$_CatFact extends _CatFact {
 
 abstract class _CatFact extends CatFact {
   const factory _CatFact(
-      {@JsonKey(name: '_id') final String id,
-      final String text,
-      @DateTimeStringConv() final DateTime? createdAt}) = _$_CatFact;
+      {@JsonKey(name: 'status')
+      @SentCountConverter()
+      @HiveField(0)
+          final int sentCount,
+      @JsonKey(name: '_id')
+      @HiveField(1)
+          final String id,
+      @HiveField(2)
+          final String text,
+      @DateTimeStringConv()
+      @HiveField(3)
+          final DateTime? createdAt}) = _$_CatFact;
   const _CatFact._() : super._();
 
   factory _CatFact.fromJson(Map<String, dynamic> json) = _$_CatFact.fromJson;
 
   @override
+  @JsonKey(name: 'status')
+  @SentCountConverter()
+  @HiveField(0)
+  int get sentCount => throw _privateConstructorUsedError;
+  @override
   @JsonKey(name: '_id')
+  @HiveField(1)
   String get id => throw _privateConstructorUsedError;
   @override
+  @HiveField(2)
   String get text => throw _privateConstructorUsedError;
   @override
   @DateTimeStringConv()
+  @HiveField(3)
   DateTime? get createdAt => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

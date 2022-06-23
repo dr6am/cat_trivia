@@ -1,7 +1,10 @@
+import 'package:hive/hive.dart';
+
 import '../../../models/cat_fact.dart';
 
 abstract class CatFactsRepository {
   Future<CatFact?> loadRandom();
-  Future<CatFact?> loadItemById(String id);
-  Future<List<CatFact>> loadHistory();
+  List<CatFact> loadHistory();
+  void storeFact(CatFact catFact);
+  Stream<BoxEvent> dbUpdatesStream();
 }

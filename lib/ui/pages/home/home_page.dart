@@ -6,6 +6,7 @@ import '../../../bloc/main/bloc.dart';
 import '../../../const/asset_path.dart';
 import '../../../const/colors.dart';
 import '../../../const/strings.dart';
+import '../../widgets/custom_button.dart';
 import '../history/history_page.dart';
 
 part 'card.dart';
@@ -33,18 +34,8 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildHistoryButton(BuildContext context) {
-    return ElevatedButton(
-        style: ButtonStyle(
-          splashFactory: NoSplash.splashFactory,
-          fixedSize: MaterialStateProperty.all<Size>(const Size.square(35)),
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6.0),
-                  side: const BorderSide(width: 2))),
-        ),
+    return CustomButton(
         onPressed: () {
-          // TODO(alex): Open history page
           Navigator.push(
               context,
               MaterialPageRoute<void>(
@@ -62,25 +53,13 @@ class AnotherFactButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6.0),
-                side: const BorderSide(width: 2))),
-      ),
+    return CustomButton(
       onPressed: () {
         context.read<MainBloc>().add(LoadRandomFactEvent());
       },
-      child: const Text(
+      child: Text(
         'Another fact!',
-        style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w700,
-            fontSize: 20,
-            letterSpacing: 0.27,
-            fontFamily: '.SF UI Display'),
+        style: Theme.of(context).textTheme.bodyLarge,
       ),
     );
   }

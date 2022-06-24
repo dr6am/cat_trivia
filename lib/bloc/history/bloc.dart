@@ -26,6 +26,6 @@ class HistoryBloc extends Bloc<HistoryBlocEvent, HistoryState> {
     emit(state.copyWith(loading: true));
     final List<CatFact> history = _catFactsRepository.loadHistory();
 
-    emit(state.copyWith(hasError: false, loading: false, history: history));
+    emit(state.copyWith(loading: false, history: history));
   }
 }

@@ -21,7 +21,7 @@ class MainBloc extends Bloc<MainBlocEvent, MainBlocState> {
       MainBlocEvent event, Emitter<MainBlocState> emit) async {
     emit(state.copyWith(loading: true, isImageLoaded: false));
     if (kDebugMode) {
-      await Future<void>.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(seconds: 1));
     }
     final CatFact? result =
         await _catFactsRepository.loadRandom().catchError((_) => null);

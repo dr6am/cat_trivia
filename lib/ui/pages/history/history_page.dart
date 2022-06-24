@@ -65,7 +65,7 @@ class HistoryPage extends StatelessWidget {
       return ListView.builder(
         itemCount: state.history.length,
         itemBuilder: (BuildContext context, int index) => CatFactHistoryTile(
-            key: ValueKey<int>(index),
+            key: ValueKey<String>(state.history[index].text),
             catFact: state.history[index].copyWith(id: (++index).toString())),
       );
     });
@@ -80,7 +80,6 @@ class CatFactHistoryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      key: ValueKey<String>(catFact.id),
       margin: const EdgeInsets.symmetric(horizontal: 36, vertical: 12),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -96,16 +95,13 @@ class CatFactHistoryTile extends StatelessWidget {
           Text(
             'Cat fact №${catFact.id}',
             textAlign: TextAlign.center,
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge!
-                .apply(fontWeightDelta: 2, fontSizeDelta: 4),
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
           const SizedBox(height: 8),
           Text(
             catFact.text,
             textAlign: TextAlign.left,
-            style: Theme.of(context).textTheme.bodyLarge,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 8),
           Text(

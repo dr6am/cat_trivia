@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'di/injection_container.dart';
+import 'ui/other/theme.dart';
 import 'ui/pages/home/home_page.dart';
 
 class App extends StatelessWidget {
@@ -8,9 +9,10 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const InjectionContainer(
+    return InjectionContainer(
       child: MaterialApp(
-        home: HomePage(),
+        theme: kDefaultTheme,
+        home: const HomePage(),
       ),
     );
   }

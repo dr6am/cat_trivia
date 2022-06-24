@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$HistoryState {
   bool get loading => throw _privateConstructorUsedError;
-  bool get hasError => throw _privateConstructorUsedError;
   List<CatFact> get history => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,7 +29,7 @@ abstract class $HistoryStateCopyWith<$Res> {
   factory $HistoryStateCopyWith(
           HistoryState value, $Res Function(HistoryState) then) =
       _$HistoryStateCopyWithImpl<$Res>;
-  $Res call({bool loading, bool hasError, List<CatFact> history});
+  $Res call({bool loading, List<CatFact> history});
 }
 
 /// @nodoc
@@ -44,17 +43,12 @@ class _$HistoryStateCopyWithImpl<$Res> implements $HistoryStateCopyWith<$Res> {
   @override
   $Res call({
     Object? loading = freezed,
-    Object? hasError = freezed,
     Object? history = freezed,
   }) {
     return _then(_value.copyWith(
       loading: loading == freezed
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      hasError: hasError == freezed
-          ? _value.hasError
-          : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
       history: history == freezed
           ? _value.history
@@ -71,7 +65,7 @@ abstract class _$$_HistoryStateCopyWith<$Res>
           _$_HistoryState value, $Res Function(_$_HistoryState) then) =
       __$$_HistoryStateCopyWithImpl<$Res>;
   @override
-  $Res call({bool loading, bool hasError, List<CatFact> history});
+  $Res call({bool loading, List<CatFact> history});
 }
 
 /// @nodoc
@@ -88,17 +82,12 @@ class __$$_HistoryStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? loading = freezed,
-    Object? hasError = freezed,
     Object? history = freezed,
   }) {
     return _then(_$_HistoryState(
       loading: loading == freezed
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      hasError: hasError == freezed
-          ? _value.hasError
-          : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
       history: history == freezed
           ? _value._history
@@ -112,17 +101,12 @@ class __$$_HistoryStateCopyWithImpl<$Res>
 
 class _$_HistoryState implements _HistoryState {
   _$_HistoryState(
-      {this.loading = false,
-      this.hasError = false,
-      final List<CatFact> history = const <CatFact>[]})
+      {this.loading = false, final List<CatFact> history = const <CatFact>[]})
       : _history = history;
 
   @override
   @JsonKey()
   final bool loading;
-  @override
-  @JsonKey()
-  final bool hasError;
   final List<CatFact> _history;
   @override
   @JsonKey()
@@ -133,7 +117,7 @@ class _$_HistoryState implements _HistoryState {
 
   @override
   String toString() {
-    return 'HistoryState(loading: $loading, hasError: $hasError, history: $history)';
+    return 'HistoryState(loading: $loading, history: $history)';
   }
 
   @override
@@ -142,7 +126,6 @@ class _$_HistoryState implements _HistoryState {
         (other.runtimeType == runtimeType &&
             other is _$_HistoryState &&
             const DeepCollectionEquality().equals(other.loading, loading) &&
-            const DeepCollectionEquality().equals(other.hasError, hasError) &&
             const DeepCollectionEquality().equals(other._history, _history));
   }
 
@@ -150,7 +133,6 @@ class _$_HistoryState implements _HistoryState {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(loading),
-      const DeepCollectionEquality().hash(hasError),
       const DeepCollectionEquality().hash(_history));
 
   @JsonKey(ignore: true)
@@ -160,15 +142,11 @@ class _$_HistoryState implements _HistoryState {
 }
 
 abstract class _HistoryState implements HistoryState {
-  factory _HistoryState(
-      {final bool loading,
-      final bool hasError,
-      final List<CatFact> history}) = _$_HistoryState;
+  factory _HistoryState({final bool loading, final List<CatFact> history}) =
+      _$_HistoryState;
 
   @override
   bool get loading => throw _privateConstructorUsedError;
-  @override
-  bool get hasError => throw _privateConstructorUsedError;
   @override
   List<CatFact> get history => throw _privateConstructorUsedError;
   @override

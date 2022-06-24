@@ -21,7 +21,7 @@ class _CatFactCardState extends State<CatFactCard>
     _cardScaleController = AnimationController(
       duration: const Duration(milliseconds: 200),
       vsync: this,
-      value: 0.5,
+      value: 0.7,
     );
     _cardScaleAnimation = CurvedAnimation(
       parent: _cardScaleController,
@@ -75,14 +75,27 @@ class CustomFactCard extends StatelessWidget {
           boxShadow: const <BoxShadow>[
             BoxShadow(offset: Offset(0, 4)),
           ]),
+      child: Stack(children: const <Widget>[
+        CatFactCardBody(),
+        LoadingFactCard(),
+      ]),
+    );
+  }
+}
+
+class CatFactCardBody extends StatelessWidget {
+  const CatFactCardBody({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned.fill(
       child: BlocBuilder<MainBloc, MainBlocState>(
-        buildWhen: (MainBlocState prev, MainBlocState curr) =>
-            prev.loading != curr.loading &&
-            prev.currentFact != curr.currentFact,
-        builder: (BuildContext context, MainBlocState state) =>
-            Stack(children: <Widget>[
-          Positioned.fill(
-            child: Column(
+          buildWhen: (MainBlocState prev, MainBlocState curr) =>
+              prev.currentFact != curr.currentFact,
+          builder: (BuildContext context, MainBlocState state) {
+            return Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
@@ -95,12 +108,8 @@ class CustomFactCard extends StatelessWidget {
                       child: Image.network(
                         '${CustomStrings.IMAGE_URL}?fjisdjfijisf=${state.currentFact?.id ?? ''}',
                         fit: BoxFit.cover,
-                        errorBuilder: (BuildContext context, Object error, _) {
-                          return Image.asset(
-                            Asset.errorCat,
-                            fit: BoxFit.cover,
-                          );
-                        },
+                        errorBuilder: (BuildContext context, Object error, _) =>
+                            Image.asset(Asset.errorCat, fit: BoxFit.cover),
                       ),
                     )),
                 Expanded(
@@ -112,12 +121,14 @@ class CustomFactCard extends StatelessWidget {
                           'Something went wrong :(\n Please check your internet connection and try again',
                       maxLines: 6,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyLarge,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .apply(fontSizeDelta: 2),
                     ),
                   ),
                 )),
-                SizedBox(
-                  height: 20,
+                SizedBox.shrink(
                   child: Padding(
                     padding: const EdgeInsets.only(right: 8.0, bottom: 4.0),
                     child: Text(
@@ -128,11 +139,8 @@ class CustomFactCard extends StatelessWidget {
                   ),
                 )
               ],
-            ),
-          ),
-          const LoadingFactCard(),
-        ]),
-      ),
+            );
+          }),
     );
   }
 }

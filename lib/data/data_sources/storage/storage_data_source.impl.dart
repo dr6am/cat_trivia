@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 import '../../../models/cat_fact.dart';
 import 'storage_data_source.dart';
 
-const String _boxName = 'historyCatFact2';
+const String _boxName = 'CatFactHistory';
 
 class StorageDataSourceImpl extends StorageDataSource {
   StorageDataSourceImpl() {
